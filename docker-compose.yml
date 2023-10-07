@@ -1,5 +1,5 @@
 services:
-  postgres:
+  financial-manager-db:
     image: postgres:13.5
     container_name: financial-manager-db
     restart: always
@@ -21,7 +21,7 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - postgres
+      - financial-manager-db
     env_file:
       - .env
     networks:
