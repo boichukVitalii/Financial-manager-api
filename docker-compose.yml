@@ -1,4 +1,17 @@
 services:
+  postgres:
+    image: postgres:13.5
+    container_name: financial-manager-db
+    restart: always
+    env_file:
+      - docker.env
+    volumes:
+      - postgres:/var/lib/postgresql/financial-manager
+    ports:
+      - '5432:5432'
+    networks:
+      - nestjs
+
   financial-manager-api:
     image: financial-manager-api:latest
     container_name: financial-manager-api
@@ -11,19 +24,6 @@ services:
       - postgres
     env_file:
       - .env
-    networks:
-      - nestjs
-
-  postgres:
-    image: postgres:13.5
-    container_name: financial-manager-db
-    restart: always
-    env_file:
-      - docker.env
-    volumes:
-      - postgres:/var/lib/postgresql/financial-manager
-    ports:
-      - '5432:5432'
     networks:
       - nestjs
 
