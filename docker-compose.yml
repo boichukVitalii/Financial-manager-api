@@ -1,7 +1,20 @@
 services:
+  financial-manager-api:
+    image: financial-manager-api:latest
+    container_name: financial-manager-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+
   postgres:
-    container_name: financial-manager-db
     image: postgres:13.5
+    container_name: financial-manager-db
     restart: always
     env_file:
       - docker.env
@@ -14,6 +27,7 @@ services:
 
 volumes:
   postgres:
+    name: nest-db
 
 networks:
   postgres:
