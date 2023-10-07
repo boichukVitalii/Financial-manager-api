@@ -1,10 +1,16 @@
-FROM node:18-alpine
+FROM node:18-alpine AS builder
 WORKDIR /opt/app
-ADD package.json package.json
-ADD package-lock.json package-lock.json
+COPY package*.json ./
+COPY prisma ./prisma/
+
 RUN npm ci
-ADD . .
-RUN npx prisma migrate dev --name "init"
+COPY . .
 RUN npm run build
 RUN npm prune --production
-CMD ["node", "./dist/main.js"]
+
+FROM node:18-alpine
+COPY --from=builder /opt/app/node_modules ./node_modules
+COPY --from=builder /opt/app/package*.json ./
+COPY --from=builder /opt/app/dist ./dist
+EXPOSE 3000
+CMD ["npm", "run", "start:prod"]
