@@ -1,0 +1,20 @@
+services:
+  postgres:
+    container_name: financial-manager-db
+    image: postgres:13.5
+    restart: always
+    env_file:
+      - docker.env
+    volumes:
+      - postgres:/var/lib/postgresql/financial-manager
+    ports:
+      - '5437:5432'
+    networks:
+      - postgres
+
+volumes:
+  postgres:
+
+networks:
+  postgres:
+    driver: bridge
