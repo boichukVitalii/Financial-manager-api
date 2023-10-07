@@ -21,14 +21,10 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/financial-manager
     ports:
-      - '5437:5432'
+      - '5432:5432'
     networks:
       - postgres
 
 volumes:
   postgres:
     name: nest-db
-
-networks:
-  postgres:
-    driver: bridge
