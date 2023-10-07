@@ -11,6 +11,8 @@ services:
       - postgres
     env_file:
       - .env
+    networks:
+      - nestjs
 
   postgres:
     image: postgres:13.5
@@ -22,7 +24,12 @@ services:
       - postgres:/var/lib/postgresql/financial-manager
     ports:
       - '5432:5432'
+    networks:
+      - nestjs
 
 volumes:
   postgres:
     name: nest-db
+
+networks:
+   nestjs:
